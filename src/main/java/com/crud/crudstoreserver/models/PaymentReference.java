@@ -3,6 +3,7 @@ package com.crud.crudstoreserver.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -14,7 +15,7 @@ public class PaymentReference {
     @Enumerated
     private PaymentType paymentType;
 
-    private double totalCost;
+    private BigDecimal totalCost;
 
     @Enumerated
     private PaymentReferenceStatus paymentReferenceStatus;

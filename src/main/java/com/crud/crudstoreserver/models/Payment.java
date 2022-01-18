@@ -14,7 +14,7 @@ public class Payment {
     @Enumerated
     private PaymentType paymentType;
 
-    private int cardNumber;
+    private String cardNumber;
     private String bank;
 
     private boolean isDefault;

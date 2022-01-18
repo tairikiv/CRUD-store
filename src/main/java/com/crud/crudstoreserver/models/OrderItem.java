@@ -3,6 +3,7 @@ package com.crud.crudstoreserver.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -15,5 +16,5 @@ public class OrderItem {
     private Product product;
 
     private int quantity;
-    private double productPrice;
+    private BigDecimal productPrice;
 }

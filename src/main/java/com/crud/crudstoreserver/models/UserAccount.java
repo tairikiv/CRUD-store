@@ -24,6 +24,6 @@ public class UserAccount {
     @OneToOne
     private Payment payment;
 
-    private int phoneNumber;
+    private String phoneNumber;
 
 }

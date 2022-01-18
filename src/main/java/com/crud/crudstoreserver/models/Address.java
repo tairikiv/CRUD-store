@@ -16,7 +16,7 @@ public class Address {
 
     private String city;
     private String street;
-    private int zipCode;
+    private String zipCode;
     private String countyState;
 
     private boolean isDefault;
