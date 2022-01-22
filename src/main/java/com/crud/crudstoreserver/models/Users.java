@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class UserAccount {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,6 +14,8 @@ public class UserAccount {
 
     private String email;
     private String password;
+
+    private String firstName;
 
     @OneToOne
     private Role Role;

@@ -27,9 +27,11 @@ public class Order {
     @OneToOne
     private OrderItem orderItem;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @OneToOne
     private PaymentReference paymentReference;
+
+    private boolean isActive;
 }
