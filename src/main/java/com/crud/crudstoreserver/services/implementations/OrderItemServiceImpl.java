@@ -1,5 +1,7 @@
 package com.crud.crudstoreserver.services.implementations;
 
+import com.crud.crudstoreserver.exceptions.OrderItemNotFoundException;
+import com.crud.crudstoreserver.models.Order;
 import com.crud.crudstoreserver.models.OrderItem;
 import com.crud.crudstoreserver.models.Product;
 import com.crud.crudstoreserver.repositories.OrderItemRepository;
@@ -23,29 +25,39 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public Optional<OrderItem> findOrderItemById(Long id) {
-        return orderItemRepository.findOrderItemById(id);
-    }
+    public OrderItem findById(Long id) throws OrderItemNotFoundException {
+        Optional<OrderItem> orderItemOptional = orderItemRepository.findById(id);
 
-    @Override
-    public Optional<OrderItem> findOrderByUserProduct(Product product) {
-        return orderItemRepository.findOrderItemByProduct(product);
-    }
-
-    @Override
-    public void updateOrderItem(OrderItem orderItem) {
-        if(orderItem == null || !orderItemRepository.existsById(orderItem.getId())) {
-            throw new RuntimeException("OrderItem not found!");
+        if(orderItemOptional.isEmpty()) {
+            throw new OrderItemNotFoundException(id);
         }
+
+        return orderItemOptional.get();
+    }
+
+    @Override
+    public OrderItem findByProduct(Product product) {
+        Optional<OrderItem> orderItemOptional = orderItemRepository.findByProduct(product);
+
+
+        return orderItemOptional.get();
+    }
+
+    @Override
+    public void updateOrderItem(OrderItem orderItem) throws OrderItemNotFoundException {
+        if(!orderItemRepository.existsById(orderItem.getId())) {
+            throw new OrderItemNotFoundException(orderItem.getId());
+        }
+
         orderItemRepository.saveAndFlush(orderItem);
     }
 
     @Override
-    public void deleteOrderItemById(Long id) {
-        Optional<OrderItem> orderItemOptional = findOrderItemById(id);
+    public void deleteOrderItemById(Long id) throws OrderItemNotFoundException {
+        Optional<OrderItem> orderItemOptional = Optional.ofNullable(findById(id));
 
         if(orderItemOptional.isEmpty()) {
-            throw new RuntimeException("OrderItem not found!");
+            throw new OrderItemNotFoundException(id);
         } else {
             OrderItem orderItem = orderItemOptional.get();
             orderItem.setActive(false);
@@ -54,11 +66,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public void restoreOrderItemById(Long id) {
-        Optional<OrderItem> orderItemOptional = findOrderItemById(id);
+    public void restoreOrderItemById(Long id) throws OrderItemNotFoundException {
+        Optional<OrderItem> orderItemOptional = Optional.ofNullable(findById(id));
 
         if(orderItemOptional.isEmpty()) {
-            throw new RuntimeException("OrderItem not found!");
+            throw new OrderItemNotFoundException(id);
         } else {
             OrderItem orderItem = orderItemOptional.get();
             orderItem.setActive(true);

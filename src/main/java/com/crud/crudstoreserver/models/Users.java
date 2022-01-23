@@ -28,4 +28,5 @@ public class Users {
 
     private String phoneNumber;
 
+    private boolean isActive;
 }

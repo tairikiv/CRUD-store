@@ -12,11 +12,11 @@ public class PaymentReference {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
 
     private BigDecimal totalCost;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private PaymentReferenceStatus paymentReferenceStatus;
 }

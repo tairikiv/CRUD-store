@@ -1,22 +1,22 @@
 package com.crud.crudstoreserver.services;
 
+import com.crud.crudstoreserver.exceptions.OrderItemNotFoundException;
 import com.crud.crudstoreserver.models.OrderItem;
 import com.crud.crudstoreserver.models.Product;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderItemService {
 
     List<OrderItem> findAllOrderItems();
 
-    Optional<OrderItem> findOrderItemById(Long id);
+    OrderItem findById(Long id) throws OrderItemNotFoundException;
 
-    Optional<OrderItem> findOrderByUserProduct(Product product);
+    OrderItem findByProduct(Product product);
 
-    void updateOrderItem(OrderItem orderItem);
+    void updateOrderItem(OrderItem orderItem) throws OrderItemNotFoundException;
 
-    void deleteOrderItemById(Long id);
+    void deleteOrderItemById(Long id) throws OrderItemNotFoundException;
 
-    void restoreOrderItemById(Long id);
+    void restoreOrderItemById(Long id) throws OrderItemNotFoundException;
 }

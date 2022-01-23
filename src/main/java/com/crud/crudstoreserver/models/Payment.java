@@ -11,7 +11,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
 
     private String cardNumber;

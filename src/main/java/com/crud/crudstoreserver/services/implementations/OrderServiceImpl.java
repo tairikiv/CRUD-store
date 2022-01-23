@@ -1,5 +1,6 @@
 package com.crud.crudstoreserver.services.implementations;
 
+import com.crud.crudstoreserver.exceptions.OrderNotFoundException;
 import com.crud.crudstoreserver.models.Order;
 import com.crud.crudstoreserver.repositories.OrderRepository;
 import com.crud.crudstoreserver.services.OrderService;
@@ -22,43 +23,49 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> findOrderById(Long id) {
-        return orderRepository.findOrderById(id);
+    public Order findById(Long id) throws OrderNotFoundException {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+
+        if (orderOptional.isEmpty()) {
+            throw new OrderNotFoundException(id);
+        }
+        return orderOptional.get();
     }
 
     @Override
-    public Optional<Order> findOrderByUserAccount(int userAccount) {
-        return orderRepository.findOrderByUserAccount(userAccount);
+    public Order findByUserAccount(int userAccount) {
+        Optional<Order> orderOptional = orderRepository.findByUserAccount(userAccount);
+
+        return orderOptional.get();
     }
 
     @Override
-    public void updateOrder(Order order) {
-        if(order == null || !orderRepository.existsById(order.getId())) {
-            throw new RuntimeException("Order not found!");
+    public void updateOrder(Order order) throws OrderNotFoundException {
+        if(!orderRepository.existsById(order.getId())) {
+            throw new OrderNotFoundException(order.getId());
         }
         orderRepository.saveAndFlush(order);
     }
 
     @Override
-    public void deleteOrderById(Long id) {
-        Optional<Order> orderOptional = findOrderById(id);
+    public void deleteOrderById(Long id) throws OrderNotFoundException {
+        Optional<Order> orderOptional = Optional.ofNullable(findById(id));
 
         if (orderOptional.isEmpty()) {
-            throw new RuntimeException("Order not found!");
+            throw new OrderNotFoundException(id);
         } else {
             Order order = orderOptional.get();
             order.setActive(false);
             orderRepository.saveAndFlush(order);
         }
-
     }
 
     @Override
-    public void restoreOrderById(Long id) {
-        Optional<Order> orderOptional = findOrderById(id);
+    public void restoreOrderById(Long id) throws OrderNotFoundException{
+        Optional<Order> orderOptional = Optional.ofNullable(findById(id));
 
         if (orderOptional.isEmpty()) {
-            throw new RuntimeException("Order not found!");
+            throw new OrderNotFoundException(id);
         } else {
             Order order = orderOptional.get();
             order.setActive(true);
