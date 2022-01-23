@@ -21,17 +21,17 @@ public class OrderItemController {
     private OrderItemService orderItemService;
 
 
-    @GetMapping()
+    @GetMapping
     public List<OrderItem> showAllOrderItems() {
         return orderItemService.findAllOrderItems();
     }
 
-    @GetMapping
-    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable @Valid OrderItem orderitem) throws OrderItemNotFoundException {
-        Optional<OrderItem> orderItemOptional = Optional.ofNullable(orderItemService.findById(orderitem.getId()));
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable Long id) throws OrderItemNotFoundException {
+        Optional<OrderItem> orderItemOptional = Optional.ofNullable(orderItemService.findById(id));
 
         if (orderItemOptional.isEmpty()) {
-            throw new OrderItemNotFoundException(orderitem.getId());
+            throw new OrderItemNotFoundException(id);
         }
         return new ResponseEntity<>(orderItemOptional.get(), HttpStatus.FOUND);
     }

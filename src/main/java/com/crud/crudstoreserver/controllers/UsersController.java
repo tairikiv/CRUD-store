@@ -26,7 +26,7 @@ public class UsersController {
         return usersService.findAllUsers();
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<Users> getUsersById(@PathVariable Long id) throws UsersNotFoundException {
         Optional<Users> usersOptional = Optional.ofNullable(usersService.findById(id));
 
@@ -36,22 +36,6 @@ public class UsersController {
         return new ResponseEntity<>(usersOptional.get(), HttpStatus.FOUND);
     }
 
-    @GetMapping
-    public ResponseEntity<Users> getUsersByEmail(@PathVariable String email) throws UsersNotFoundException {
-        Optional<Users> usersOptional = Optional.ofNullable(usersService.findUsersByEmail(email));
-
-        if (usersOptional.isEmpty()) {
-            throw new UsersNotFoundException(email);
-        }
-        return new ResponseEntity<>(usersOptional.get(), HttpStatus.FOUND);
-    }
-
-    @GetMapping
-    public ResponseEntity<Users> getUsersByRole(@PathVariable Role role) {
-        Optional<Users> usersOptional = Optional.ofNullable(usersService.findUsersByRole(role));
-
-        return new ResponseEntity<>(usersOptional.get(), HttpStatus.FOUND);
-    }
 
     @PostMapping
     public ResponseEntity<?> addUsers(@RequestBody @Valid Users users){
@@ -74,6 +58,7 @@ public class UsersController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/restore/{id}")
     public ResponseEntity<?> restoreUsers(@PathVariable("id") Long id) throws UsersNotFoundException {
         usersService.restoreUsersById(id);
         return new ResponseEntity<>(HttpStatus.OK);

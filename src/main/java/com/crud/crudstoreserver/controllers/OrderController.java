@@ -21,16 +21,16 @@ public class OrderController {
     private OrderService orderService;
 
 
-    @GetMapping("")
+    @GetMapping
     public List<Order> showAllOrders( ) {
         return orderService.findAllOrders();
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) throws OrderNotFoundException{
         Optional<Order> orderOptional = Optional.ofNullable(orderService.findById(id));
 
-        if (!orderOptional.isPresent()) {
+        if (orderOptional.isEmpty()) {
             throw new OrderNotFoundException(id);
         }
         return new ResponseEntity<>(orderOptional.get(), HttpStatus.FOUND);
@@ -46,13 +46,13 @@ public class OrderController {
     }
 
     @GetMapping("/delete/{id}")
-    public ResponseEntity<?> deleteOrder(@PathVariable @Valid Order order) throws OrderNotFoundException {
-        orderService.deleteOrderById(order.getId());
+    public ResponseEntity<?> deleteOrder(@PathVariable("id") Long id) throws OrderNotFoundException {
+        orderService.deleteOrderById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/restore/{id}")
-    public ResponseEntity<?> restoreOrder(@PathVariable @Valid Order order) throws OrderNotFoundException {
-        orderService.restoreOrderById(order.getId());
+    public ResponseEntity<?> restoreOrder(@PathVariable("id") Long id) throws OrderNotFoundException {
+        orderService.restoreOrderById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
