@@ -20,4 +20,6 @@ public class Product {
     private ProductType productType;
 
     private int size;
+
+    private boolean isActive;
 }

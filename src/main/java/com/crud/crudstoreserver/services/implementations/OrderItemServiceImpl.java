@@ -36,9 +36,12 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public OrderItem findByProduct(Product product) {
+    public OrderItem findByProduct(Product product) throws OrderItemNotFoundException {
         Optional<OrderItem> orderItemOptional = orderItemRepository.findByProduct(product);
 
+        if(orderItemOptional.isEmpty()) {
+            throw new OrderItemNotFoundException(product);
+        }
 
         return orderItemOptional.get();
     }

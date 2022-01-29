@@ -32,12 +32,6 @@ public class OrderServiceImpl implements OrderService {
         return orderOptional.get();
     }
 
-    @Override
-    public Order findByUserAccount(int userAccount) {
-        Optional<Order> orderOptional = orderRepository.findByUserAccount(userAccount);
-
-        return orderOptional.get();
-    }
 
     @Override
     public void updateOrder(Order order) throws OrderNotFoundException {

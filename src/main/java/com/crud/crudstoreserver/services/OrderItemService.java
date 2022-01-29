@@ -12,7 +12,7 @@ public interface OrderItemService {
 
     OrderItem findById(Long id) throws OrderItemNotFoundException;
 
-    OrderItem findByProduct(Product product);
+    OrderItem findByProduct(Product product) throws OrderItemNotFoundException;
 
     void updateOrderItem(OrderItem orderItem) throws OrderItemNotFoundException;
 
