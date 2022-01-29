@@ -20,4 +20,6 @@ public class Address {
     private String countyState;
 
     private boolean isDefault;
+
+    private boolean isActive;
 }

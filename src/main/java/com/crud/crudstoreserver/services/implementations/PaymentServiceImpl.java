@@ -34,13 +34,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment findByPaymentType(PaymentType paymentType) throws PaymentNotFoundException {
-        Optional<Payment> paymentOptional = paymentRepository.findByPaymentType(paymentType);
+    public List<Payment> findByPaymentType(PaymentType paymentType) {
+        return paymentRepository.findAllByPaymentType(paymentType);
 
-        if (paymentOptional.isEmpty()){
-            throw new PaymentNotFoundException(paymentType);
-        }
-        return paymentOptional.get();
     }
 
     @Override
@@ -54,13 +50,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment findByBank(String bank) throws PaymentNotFoundException {
-        Optional<Payment> paymentOptional = paymentRepository.findByBank(bank);
-
-        if (paymentOptional.isEmpty()){
-            throw new PaymentNotFoundException(bank);
-        }
-        return paymentOptional.get();
+    public List<Payment> findByBank(String bank) {
+        return paymentRepository.findAllByBank(bank);
     }
 
     @Override

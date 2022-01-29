@@ -1,7 +1,6 @@
 package com.crud.crudstoreserver.services.implementations;
 
 import com.crud.crudstoreserver.exceptions.OrderItemNotFoundException;
-import com.crud.crudstoreserver.models.Order;
 import com.crud.crudstoreserver.models.OrderItem;
 import com.crud.crudstoreserver.models.Product;
 import com.crud.crudstoreserver.repositories.OrderItemRepository;

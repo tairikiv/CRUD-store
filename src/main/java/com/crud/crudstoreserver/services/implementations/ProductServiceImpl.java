@@ -35,43 +35,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findByName(String name) throws ProductNotFoundException {
-        Optional<Product> productOptional = productRepository.findByName(name);
-
-        if(productOptional.isEmpty()) {
-            throw new ProductNotFoundException(name);
-        }
-        return productOptional.get();
+    public List<Product> findByName(String name) {
+        return productRepository.findAllByName(name);
     }
 
     @Override
-    public Product findByPrice(BigDecimal price) throws ProductNotFoundException {
-        Optional<Product> productOptional = productRepository.findByPrice(price);
-
-        if(productOptional.isEmpty()) {
-            throw new ProductNotFoundException(price);
-        }
-        return productOptional.get();
+    public List<Product> findByPrice(BigDecimal price) {
+        return productRepository.findAllByPrice(price);
     }
 
     @Override
-    public Product findByProductType(ProductType productType) throws ProductNotFoundException {
-        Optional<Product> productOptional = productRepository.findByProductType(productType);
-
-        if (productOptional.isEmpty()) {
-            throw new ProductNotFoundException(productType);
-        }
-        return productOptional.get();
+    public List<Product> findByProductType(ProductType productType) {
+        return productRepository.findAllByProductType(productType);
     }
 
     @Override
-    public Product findBySize(int size) throws ProductNotFoundException {
-        Optional<Product> productOptional = productRepository.findBySize(size);
-
-        if (productOptional.isEmpty()) {
-            throw new ProductNotFoundException(size);
-        }
-        return productOptional.get();
+    public List<Product> findBySize(int size){
+        return productRepository.findAllBySize(size);
     }
 
     @Override

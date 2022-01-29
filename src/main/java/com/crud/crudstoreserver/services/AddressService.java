@@ -1,17 +1,22 @@
 package com.crud.crudstoreserver.services;
 
+import com.crud.crudstoreserver.exceptions.AddressNotFoundException;
 import com.crud.crudstoreserver.models.Address;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AddressService {
 
     List<Address> findAllAddresses();
 
+    Address findById(Long id) throws AddressNotFoundException;
+
     void createAddress(Address address);
 
-    Optional<Address> findAddressByCity(String city);
+    void updateAddress(Address address) throws AddressNotFoundException;
 
-    Optional<Address> findAddressByCountyState(String countyState);
+    void deleteAddressById(Long id) throws AddressNotFoundException;
+
+    void restoreAddressById(Long id) throws AddressNotFoundException;
+
 }

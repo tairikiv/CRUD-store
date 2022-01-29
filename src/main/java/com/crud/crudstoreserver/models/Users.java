@@ -17,8 +17,7 @@ public class Users {
 
     private String firstName;
 
-    @OneToOne
-    private Role Role;
+    private boolean isAdmin;
 
     @OneToOne
     private Address address;

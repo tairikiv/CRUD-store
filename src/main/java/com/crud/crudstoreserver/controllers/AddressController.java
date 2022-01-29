@@ -1,14 +1,18 @@
 package com.crud.crudstoreserver.controllers;
 
+import com.crud.crudstoreserver.exceptions.AddressNotFoundException;
 import com.crud.crudstoreserver.models.Address;
 import com.crud.crudstoreserver.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/address")
@@ -21,11 +25,41 @@ public class AddressController {
         return addressService.findAllAddresses();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Address> getAddressById(@PathVariable Long id) throws AddressNotFoundException {
+        Optional<Address> addressOptional = Optional.ofNullable(addressService.findById(id));
+
+        if (addressOptional.isEmpty()) {
+            throw new AddressNotFoundException(id);
+        }
+        return new ResponseEntity<>(addressOptional.get(), HttpStatus.FOUND);
+    }
+
     @PostMapping
     public ResponseEntity<?> addAddress(@RequestBody @Valid Address address){
         addressService.createAddress(address);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PutMapping
+    public ResponseEntity<Address> updateAddress(@RequestBody @Valid Address address) throws AddressNotFoundException {
+        addressService.updateAddress(address);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity<>(address, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<?> deleteAddress(@PathVariable("id") Long id) throws AddressNotFoundException {
+        addressService.deleteAddressById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/restore/{id}")
+    public ResponseEntity<?> restoreAddress(@PathVariable("id") Long id) throws AddressNotFoundException {
+        addressService.restoreAddressById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

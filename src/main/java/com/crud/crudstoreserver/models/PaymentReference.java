@@ -19,4 +19,6 @@ public class PaymentReference {
 
     @Enumerated(EnumType.STRING)
     private PaymentReferenceStatus paymentReferenceStatus;
+
+    private boolean isActive;
 }

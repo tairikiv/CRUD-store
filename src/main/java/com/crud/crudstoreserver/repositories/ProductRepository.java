@@ -6,15 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    Optional<Product> findByName(String name);
+    List<Product> findAllByName(String name);
 
-    Optional<Product> findByPrice(BigDecimal price);
+    List<Product> findAllByPrice(BigDecimal price);
 
-    Optional<Product> findByProductType(ProductType productType);
+    List<Product> findAllByProductType(ProductType productType);
 
-    Optional<Product> findBySize(int size);
+    List<Product> findAllBySize(int size);
 }

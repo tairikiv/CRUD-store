@@ -1,7 +1,6 @@
 package com.crud.crudstoreserver.services;
 
 import com.crud.crudstoreserver.exceptions.UsersNotFoundException;
-import com.crud.crudstoreserver.models.Role;
 import com.crud.crudstoreserver.models.Users;
 
 import java.util.List;

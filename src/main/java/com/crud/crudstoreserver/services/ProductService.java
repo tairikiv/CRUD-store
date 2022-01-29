@@ -13,13 +13,13 @@ public interface ProductService {
 
     Product findById(Long id) throws ProductNotFoundException;
 
-    Product findByName(String name) throws ProductNotFoundException;
+    List<Product> findByName(String name);
 
-    Product findByPrice(BigDecimal price) throws ProductNotFoundException;
+    List<Product> findByPrice(BigDecimal price);
 
-    Product findByProductType(ProductType productType) throws ProductNotFoundException;
+    List<Product> findByProductType(ProductType productType);
 
-    Product findBySize(int size) throws ProductNotFoundException;
+    List<Product> findBySize(int size);
 
     void addProduct(Product product);
 

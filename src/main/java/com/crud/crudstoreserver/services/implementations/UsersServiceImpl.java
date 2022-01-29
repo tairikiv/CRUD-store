@@ -1,9 +1,6 @@
 package com.crud.crudstoreserver.services.implementations;
 
-import com.crud.crudstoreserver.exceptions.OrderNotFoundException;
 import com.crud.crudstoreserver.exceptions.UsersNotFoundException;
-import com.crud.crudstoreserver.models.Order;
-import com.crud.crudstoreserver.models.Role;
 import com.crud.crudstoreserver.models.Users;
 import com.crud.crudstoreserver.repositories.UsersRepository;
 import com.crud.crudstoreserver.services.UsersService;

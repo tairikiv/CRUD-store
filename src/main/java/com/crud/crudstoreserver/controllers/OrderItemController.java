@@ -20,7 +20,6 @@ public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
-
     @GetMapping
     public List<OrderItem> showAllOrderItems() {
         return orderItemService.findAllOrderItems();

@@ -12,11 +12,11 @@ public interface PaymentService {
 
     Payment findById(Long id) throws PaymentNotFoundException;
 
-    Payment findByPaymentType(PaymentType paymentType) throws PaymentNotFoundException;
+    List<Payment> findByPaymentType(PaymentType paymentType);
 
     Payment findByCardNumber(String cardNumber) throws PaymentNotFoundException;
 
-    Payment findByBank(String bank) throws PaymentNotFoundException;
+    List<Payment> findByBank(String bank);
 
     void createPayment(Payment payment);
 

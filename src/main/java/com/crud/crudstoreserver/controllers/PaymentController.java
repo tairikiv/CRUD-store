@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/payment")
 public class PaymentController {
 
     @Autowired
@@ -37,13 +38,8 @@ public class PaymentController {
     }
 
     @GetMapping("/{paymentType}")
-    public ResponseEntity<Payment> getPaymentByPaymentType(@PathVariable PaymentType paymentType) throws PaymentNotFoundException {
-        Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.findByPaymentType(paymentType));
-
-        if (paymentOptional.isEmpty()) {
-            throw new PaymentNotFoundException(paymentType);
-        }
-        return new ResponseEntity<>(paymentOptional.get(), HttpStatus.FOUND);
+    public List<Payment> getPaymentByPaymentType(@PathVariable PaymentType paymentType){
+        return paymentService.findByPaymentType(paymentType);
     }
 
     @GetMapping("/{cardNumber}")
@@ -57,13 +53,8 @@ public class PaymentController {
      }
 
     @GetMapping("/{bank}")
-    public ResponseEntity<Payment> getPaymentByBank(@PathVariable String bank) throws PaymentNotFoundException {
-        Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.findByBank(bank));
-
-        if (paymentOptional.isEmpty()) {
-            throw new PaymentNotFoundException(bank);
-        }
-        return new ResponseEntity<>(paymentOptional.get(), HttpStatus.FOUND);
+    public List<Payment> getPaymentByBank(@PathVariable String bank) {
+        return paymentService.findByBank(bank);
     }
 
     @PostMapping

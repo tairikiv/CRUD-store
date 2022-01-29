@@ -5,14 +5,15 @@ import com.crud.crudstoreserver.models.PaymentType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
-    Optional<Payment> findByPaymentType(PaymentType paymentType);
+    List<Payment> findAllByPaymentType(PaymentType paymentType);
 
     Optional<Payment> findByCardNumber(String cardNumber);
 
-    Optional<Payment> findByBank(String bank);
+    List<Payment> findAllByBank(String bank);
 }
 

@@ -38,43 +38,23 @@ public class ProductController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Product> getProductByName(@PathVariable String name) throws ProductNotFoundException {
-        Optional<Product> productOptional = Optional.ofNullable(productService.findByName(name));
-
-        if(productOptional.isEmpty()) {
-            throw new ProductNotFoundException(name);
-        }
-        return new ResponseEntity<>(productOptional.get(), HttpStatus.FOUND);
+    public List<Product> getProductByName(@PathVariable String name) {
+        return productService.findByName(name);
     }
 
     @GetMapping("/{price}")
-    public ResponseEntity<Product> getProductByPrice(@PathVariable BigDecimal price) throws ProductNotFoundException {
-        Optional<Product> productOptional = Optional.ofNullable(productService.findByPrice(price));
-
-        if (productOptional.isEmpty()) {
-            throw new ProductNotFoundException(price);
-        }
-        return new ResponseEntity<>(productOptional.get(), HttpStatus.FOUND);
+    public List<Product> getProductByPrice(@PathVariable BigDecimal price){
+        return productService.findByPrice(price);
     }
 
     @GetMapping("/{productType}")
-    public ResponseEntity<Product> getProductByProductType(@PathVariable ProductType productType) throws ProductNotFoundException {
-        Optional<Product> productOptional = Optional.ofNullable(productService.findByProductType(productType));
-
-        if (productOptional.isEmpty()) {
-            throw new ProductNotFoundException(productType);
-        }
-        return new ResponseEntity<>(productOptional.get(), HttpStatus.FOUND);
+    public List<Product> getProductByProductType(@PathVariable ProductType productType){
+        return productService.findByProductType(productType);
     }
 
     @GetMapping("/{size}")
-    public ResponseEntity<Product> getProductBySize(@PathVariable int size) throws ProductNotFoundException {
-        Optional<Product> productOptional = Optional.ofNullable(productService.findBySize(size));
-
-        if (productOptional.isEmpty()) {
-            throw new ProductNotFoundException(size);
-        }
-        return new ResponseEntity<>(productOptional.get(), HttpStatus.FOUND);
+    public List<Product> getProductBySize(@PathVariable int size){
+        return productService.findBySize(size);
     }
 
     @PostMapping
