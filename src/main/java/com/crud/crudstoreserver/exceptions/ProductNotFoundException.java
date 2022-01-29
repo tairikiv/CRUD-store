@@ -12,6 +12,7 @@ public class ProductNotFoundException extends Exception{
     public ProductNotFoundException(String name) {
         super("Product (name:" + name + " ) not found!");
     }
+
     public ProductNotFoundException(BigDecimal price) {
         super("Product (price:" + price + " ) not found!");
     }
@@ -19,6 +20,7 @@ public class ProductNotFoundException extends Exception{
     public ProductNotFoundException(ProductType productType) {
         super("Product (productType:" + productType + " ) not found!");
     }
+
     public ProductNotFoundException(int size) {
         super("Product (size:" + size + " ) not found!");
     }

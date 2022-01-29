@@ -19,4 +19,5 @@ public class Payment {
 
     private boolean isDefault;
 
+    private boolean isActive;
 }

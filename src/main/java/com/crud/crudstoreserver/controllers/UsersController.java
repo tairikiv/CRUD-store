@@ -1,7 +1,6 @@
 package com.crud.crudstoreserver.controllers;
 
 import com.crud.crudstoreserver.exceptions.UsersNotFoundException;
-import com.crud.crudstoreserver.models.Role;
 import com.crud.crudstoreserver.models.Users;
 import com.crud.crudstoreserver.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -36,20 +36,6 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users findUsersByEmail(String email) {
-        Optional<Users> usersOptional = usersRepository.findUsersByEmail(email);
-
-        return usersOptional.get();
-    }
-
-    @Override
-    public Users findUsersByRole(Role role) {
-        Optional<Users> usersOptional = usersRepository.findUsersByRole(role);
-
-        return usersOptional.get();
-    }
-
-    @Override
     public void createUsers(Users users) {
         users.setActive(true);
         usersRepository.save(users);

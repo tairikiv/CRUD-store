@@ -12,10 +12,6 @@ public interface UsersService {
 
     Users findById(Long id) throws UsersNotFoundException;
 
-    Users findUsersByEmail(String email);
-
-    Users findUsersByRole(Role role);
-
     void createUsers (Users users);
 
     void updateUsers(Users users) throws UsersNotFoundException;
