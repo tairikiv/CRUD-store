@@ -3,6 +3,9 @@ package com.crud.crudstoreserver.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
@@ -11,6 +14,15 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToMany
+    private List<OrderItem> orderItems;
+
     @OneToOne
-    private  OrderItem orderItem;
+    @NotNull
+    private Users user;
+
+    private BigDecimal totalCost;
+
+    private boolean isActive;
+
 }

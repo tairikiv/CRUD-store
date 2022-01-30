@@ -11,6 +11,8 @@ public interface OrderService {
 
     Order findById(Long id) throws OrderNotFoundException;
 
+    Order createOrder(Order order);
+
     void updateOrder(Order order) throws OrderNotFoundException;
 
     void deleteOrderById(Long id) throws OrderNotFoundException;

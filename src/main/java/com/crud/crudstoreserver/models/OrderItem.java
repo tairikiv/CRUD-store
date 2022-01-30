@@ -3,6 +3,8 @@ package com.crud.crudstoreserver.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
@@ -13,10 +15,18 @@ public class OrderItem {
     private Long id;
 
     @OneToOne
+    @NotNull
     private Product product;
 
+    @Min(1)
     private int quantity;
-    private BigDecimal productPrice;
+
+    @Min(1)
+    private BigDecimal totalPrice;
 
     private boolean isActive;
+
+    @OneToOne
+    @NotNull
+    private Users user;
 }

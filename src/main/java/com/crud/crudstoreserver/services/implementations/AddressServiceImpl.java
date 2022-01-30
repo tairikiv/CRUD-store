@@ -2,12 +2,14 @@ package com.crud.crudstoreserver.services.implementations;
 
 import com.crud.crudstoreserver.exceptions.AddressNotFoundException;
 import com.crud.crudstoreserver.models.Address;
+import com.crud.crudstoreserver.models.Users;
 import com.crud.crudstoreserver.repositories.AddressRepository;
 import com.crud.crudstoreserver.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +37,17 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void createAddress(Address address) {
-        addressRepository.save(address);
+    public Address createAddress(Address address) {
+        address.setActive(true);
+        return addressRepository.save(address);
+    }
+
+    @Override
+    public List<Address> createBulkAddresses(List<Address> addresses) {
+        List<Address> createdAddress = new ArrayList<>();
+        addresses.forEach(address -> createdAddress.add(createAddress(address)));
+
+        return createdAddress;
     }
 
     @Override
@@ -71,7 +82,17 @@ public class AddressServiceImpl implements AddressService {
             address.setActive(true);
             addressRepository.saveAndFlush(address);
         }
-
     }
 
+    @Override
+    public Address getDefaultAddressByUser(Users user) throws AddressNotFoundException {
+        Optional<Address> optionalAddress = user.getAddresses().stream()
+                .filter(address -> address.isActive() && address.isDefault())
+                .findFirst();
+
+        if (optionalAddress.isEmpty()) {
+            throw new AddressNotFoundException(user);
+        }
+        return optionalAddress.get();
+    }
 }

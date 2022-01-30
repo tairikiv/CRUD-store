@@ -32,6 +32,12 @@ public class OrderServiceImpl implements OrderService {
         return orderOptional.get();
     }
 
+    @Override
+    public Order createOrder(Order order) {
+        order.setActive(true);
+        return orderRepository.save(order);
+    }
+
 
     @Override
     public void updateOrder(Order order) throws OrderNotFoundException {

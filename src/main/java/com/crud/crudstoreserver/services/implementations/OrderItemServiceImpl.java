@@ -3,6 +3,7 @@ package com.crud.crudstoreserver.services.implementations;
 import com.crud.crudstoreserver.exceptions.OrderItemNotFoundException;
 import com.crud.crudstoreserver.models.OrderItem;
 import com.crud.crudstoreserver.models.Product;
+import com.crud.crudstoreserver.models.Users;
 import com.crud.crudstoreserver.repositories.OrderItemRepository;
 import com.crud.crudstoreserver.services.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,16 @@ public class OrderItemServiceImpl implements OrderItemService {
             orderItem.setActive(true);
             orderItemRepository.saveAndFlush(orderItem);
         }
+    }
+
+    @Override
+    public List<OrderItem> findAllActiveOrderItemsByUser(Users user) {
+        return orderItemRepository.findAllByUserAndActiveIsTrue(user);
+    }
+
+    @Override
+    public void createOrderItem(OrderItem orderItem) {
+        orderItem.setActive(true);
+        orderItemRepository.save(orderItem);
     }
 }

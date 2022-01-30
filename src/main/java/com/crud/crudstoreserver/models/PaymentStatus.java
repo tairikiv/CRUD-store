@@ -1,6 +1,7 @@
 package com.crud.crudstoreserver.models;
 
-public enum PaymentReferenceStatus {
+public enum PaymentStatus {
     PENDING,
-    DONE
+    DONE,
+    FAILED
 }
