@@ -41,6 +41,12 @@ public class AddressController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PostMapping
+    public List<Address> createBulkAddresses(@RequestBody List<Address> addresses){
+        addressService.createBulkAddresses(addresses);
+        return addressService.createBulkAddresses(addresses);
+    }
+
     @PutMapping
     public ResponseEntity<Address> updateAddress(@RequestBody @Valid Address address) throws AddressNotFoundException {
         addressService.updateAddress(address);

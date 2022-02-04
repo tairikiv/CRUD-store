@@ -49,11 +49,16 @@ public class OrderController {
         orderService.deleteOrderById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("/restore/{id}")
     public ResponseEntity<?> restoreOrder(@PathVariable("id") Long id) throws OrderNotFoundException {
         orderService.restoreOrderById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @PostMapping
+    public ResponseEntity<?> addOrder(@RequestBody @Valid Order order) {
+        orderService.createOrder(order);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }

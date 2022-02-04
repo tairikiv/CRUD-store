@@ -1,7 +1,10 @@
 package com.crud.crudstoreserver.controllers;
 
+import com.crud.crudstoreserver.exceptions.CartNotFoundException;
 import com.crud.crudstoreserver.exceptions.OrderItemNotFoundException;
 import com.crud.crudstoreserver.models.OrderItem;
+import com.crud.crudstoreserver.models.Users;
+import com.crud.crudstoreserver.services.CartService;
 import com.crud.crudstoreserver.services.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,19 +23,43 @@ public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
+    @Autowired
+    private CartService cartService;
+
     @GetMapping
     public List<OrderItem> showAllOrderItems() {
         return orderItemService.findAllOrderItems();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable Long id) throws OrderItemNotFoundException {
-        Optional<OrderItem> orderItemOptional = Optional.ofNullable(orderItemService.findById(id));
+    public ResponseEntity<?> getOrderItemById(@PathVariable Long id) throws OrderItemNotFoundException {
+        orderItemService.findById(id);
 
-        if (orderItemOptional.isEmpty()) {
-            throw new OrderItemNotFoundException(id);
+        try{
+            orderItemService.findById(id);
+        } catch (OrderItemNotFoundException orderItemNotFoundException) {
+            return new ResponseEntity<>(orderItemNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(orderItemOptional.get(), HttpStatus.FOUND);
+
+        return new ResponseEntity<>( HttpStatus.FOUND);
+    }
+
+    @GetMapping
+    public List<OrderItem> showAllActiveOrderItemsByUser(Users user) {
+        return  orderItemService.findAllActiveOrderItemsByUser(user);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createOrderItem(@RequestBody @Valid OrderItem orderItem) {
+        orderItemService.createOrderItem(orderItem);
+
+        try {
+            cartService.updateCartByUser(orderItem.getUser());
+        } catch (CartNotFoundException cartNotFoundException){
+            return new ResponseEntity<>(cartNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping

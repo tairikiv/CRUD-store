@@ -2,7 +2,6 @@ package com.crud.crudstoreserver.controllers;
 
 import com.crud.crudstoreserver.exceptions.PaymentNotFoundException;
 import com.crud.crudstoreserver.models.Payment;
-import com.crud.crudstoreserver.models.PaymentType;
 import com.crud.crudstoreserver.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,12 +17,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
-
     @Autowired
     private PaymentService paymentService;
 
     @GetMapping
-    public List<Payment> getAllPayments() {
+    public List<Payment> getAllPayments(){
         return paymentService.findAllPayments();
     }
 
@@ -35,26 +33,6 @@ public class PaymentController {
             throw new PaymentNotFoundException(id);
         }
         return new ResponseEntity<>(paymentOptional.get(), HttpStatus.FOUND);
-    }
-
-    @GetMapping("/{paymentType}")
-    public List<Payment> getPaymentByPaymentType(@PathVariable PaymentType paymentType){
-        return paymentService.findByPaymentType(paymentType);
-    }
-
-    @GetMapping("/{cardNumber}")
-    public ResponseEntity<Payment> getPaymentByCardNumber(@PathVariable String cardNumber) throws PaymentNotFoundException {
-        Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.findByCardNumber(cardNumber));
-
-        if (paymentOptional.isEmpty()) {
-            throw new PaymentNotFoundException(cardNumber);
-        }
-        return new ResponseEntity<>(paymentOptional.get(), HttpStatus.FOUND);
-     }
-
-    @GetMapping("/{bank}")
-    public List<Payment> getPaymentByBank(@PathVariable String bank) {
-        return paymentService.findByBank(bank);
     }
 
     @PostMapping
