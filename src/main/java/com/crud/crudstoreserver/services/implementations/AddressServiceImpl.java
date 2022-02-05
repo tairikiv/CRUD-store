@@ -2,7 +2,7 @@ package com.crud.crudstoreserver.services.implementations;
 
 import com.crud.crudstoreserver.exceptions.AddressNotFoundException;
 import com.crud.crudstoreserver.models.Address;
-import com.crud.crudstoreserver.models.Users;
+import com.crud.crudstoreserver.models.Person;
 import com.crud.crudstoreserver.repositories.AddressRepository;
 import com.crud.crudstoreserver.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,13 +85,13 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address getDefaultAddressByUser(Users user) throws AddressNotFoundException {
-        Optional<Address> optionalAddress = user.getAddresses().stream()
+    public Address getDefaultAddressByPerson(Person person) throws AddressNotFoundException {
+        Optional<Address> optionalAddress = person.getAddresses().stream()
                 .filter(address -> address.isActive() && address.isDefault())
                 .findFirst();
 
         if (optionalAddress.isEmpty()) {
-            throw new AddressNotFoundException(user);
+            throw new AddressNotFoundException(person);
         }
         return optionalAddress.get();
     }

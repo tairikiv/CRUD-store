@@ -9,17 +9,17 @@ import java.util.List;
 
 @Data
 @Entity
-public class Cart {
+public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToMany
-    private List<OrderItem> orderItems;
+    private List<PurchaseOrderItem> purchaseOrderItems;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @NotNull
-    private Users user;
+    private Person person;
 
     private BigDecimal totalCost;
 

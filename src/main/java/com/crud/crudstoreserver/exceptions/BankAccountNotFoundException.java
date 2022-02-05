@@ -1,8 +1,6 @@
 package com.crud.crudstoreserver.exceptions;
 
-import com.crud.crudstoreserver.models.Users;
-
-import java.util.function.Supplier;
+import com.crud.crudstoreserver.models.Person;
 
 public class BankAccountNotFoundException extends Exception {
     public BankAccountNotFoundException(Long id) {
@@ -11,10 +9,10 @@ public class BankAccountNotFoundException extends Exception {
 
 
     public BankAccountNotFoundException(String cardNumber) {
-        super("Bank account not found for user with card number: " + cardNumber );
+        super("Bank account not found for person with card number: " + cardNumber );
     }
 
-    public BankAccountNotFoundException(Users user) {
-        super("Default bank account not found for user: " + user.getEmail());
+    public BankAccountNotFoundException(Person person) {
+        super("Default bank account not found for person: " + person.getEmail());
     }
 }

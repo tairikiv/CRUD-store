@@ -1,6 +1,6 @@
 package com.crud.crudstoreserver.models;
 
-public enum OrderStatus {
+public enum PurchaseOrderStatus {
     PENDING,
     PAID,
     SHIPPING,

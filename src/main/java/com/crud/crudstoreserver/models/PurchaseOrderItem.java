@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-public class OrderItem {
+public class PurchaseOrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @NotNull
     private Product product;
 
@@ -26,7 +26,7 @@ public class OrderItem {
 
     private boolean isActive;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @NotNull
-    private Users user;
+    private Person person;
 }

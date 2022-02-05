@@ -14,7 +14,7 @@ public class BankAccount {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private CardType paymentType;
+    private CardType cardType;
 
     @NotBlank
     private String cardNumber;

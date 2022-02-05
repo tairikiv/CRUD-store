@@ -3,7 +3,7 @@ package com.crud.crudstoreserver.services;
 import com.crud.crudstoreserver.exceptions.BankAccountNotFoundException;
 import com.crud.crudstoreserver.models.BankAccount;
 import com.crud.crudstoreserver.models.CardType;
-import com.crud.crudstoreserver.models.Users;
+import com.crud.crudstoreserver.models.Person;
 
 import java.util.List;
 
@@ -29,5 +29,5 @@ public interface BankAccountService {
 
     List<BankAccount> createBulkBankAccounts(List<BankAccount> bankAccounts);
 
-    BankAccount getDefaultBankAccountByUser(Users user) throws BankAccountNotFoundException;
+    BankAccount getDefaultBankAccountByPerson(Person person) throws BankAccountNotFoundException;
 }

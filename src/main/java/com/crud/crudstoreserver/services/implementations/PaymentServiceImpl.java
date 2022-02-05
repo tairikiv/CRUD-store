@@ -6,7 +6,7 @@ import com.crud.crudstoreserver.exceptions.PaymentNotFoundException;
 import com.crud.crudstoreserver.models.BankAccount;
 import com.crud.crudstoreserver.models.Payment;
 import com.crud.crudstoreserver.models.PaymentStatus;
-import com.crud.crudstoreserver.models.Users;
+import com.crud.crudstoreserver.models.Person;
 import com.crud.crudstoreserver.repositories.PaymentRepository;
 import com.crud.crudstoreserver.services.BankAccountService;
 import com.crud.crudstoreserver.services.PaymentService;
@@ -44,8 +44,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment initiatePayment(Users user, BigDecimal totalSum) throws BankAccountNotFoundException, PaymentFailedException {
-        BankAccount defaultBankAccount = bankAccountService.getDefaultBankAccountByUser(user);
+    public Payment initiatePayment(Person person, BigDecimal totalSum) throws BankAccountNotFoundException, PaymentFailedException {
+        BankAccount defaultBankAccount = bankAccountService.getDefaultBankAccountByPerson(person);
         Payment payment = new Payment();
         payment.setBankAccount(defaultBankAccount);
         payment.setTotalSum(totalSum);

@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bankAccount")
+@RequestMapping("/bank-account")
 public class BankAccountController {
 
     @Autowired
@@ -85,11 +85,5 @@ public class BankAccountController {
     public ResponseEntity<?> restoreBankAccount(@PathVariable("id") Long id) throws BankAccountNotFoundException {
         bankAccountService.restoreBankAccountById(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping
-    public List<BankAccount> createBulkBankAccounts(@RequestBody List<BankAccount> bankAccounts) {
-        bankAccountService.createBulkBankAccounts(bankAccounts);
-        return bankAccountService.createBulkBankAccounts(bankAccounts);
     }
 }

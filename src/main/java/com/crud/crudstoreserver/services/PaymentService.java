@@ -4,8 +4,7 @@ import com.crud.crudstoreserver.exceptions.BankAccountNotFoundException;
 import com.crud.crudstoreserver.exceptions.PaymentFailedException;
 import com.crud.crudstoreserver.exceptions.PaymentNotFoundException;
 import com.crud.crudstoreserver.models.Payment;
-import com.crud.crudstoreserver.models.PaymentStatus;
-import com.crud.crudstoreserver.models.Users;
+import com.crud.crudstoreserver.models.Person;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,7 +15,7 @@ public interface PaymentService {
 
     Payment findById(Long id) throws PaymentNotFoundException;
 
-    Payment initiatePayment(Users user, BigDecimal totalSum) throws BankAccountNotFoundException, PaymentFailedException;
+    Payment initiatePayment(Person person, BigDecimal totalSum) throws BankAccountNotFoundException, PaymentFailedException;
 
     void debitPayment(Payment payment);
     Payment createPayment(Payment payment);

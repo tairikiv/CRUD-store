@@ -4,36 +4,34 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @Entity
-public class Order {
+public class PurchaseOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @NotNull
-    private Users user;
+    private Person person;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Address address;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate orderDate;
 
     @ManyToMany
-    private List<OrderItem> orderItems;
+    private List<PurchaseOrderItem> purchaseOrderItems;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    private PurchaseOrderStatus purchaseOrderStatus;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @NotNull
     private Payment payment;
 

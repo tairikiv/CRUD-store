@@ -2,7 +2,7 @@ package com.crud.crudstoreserver.services;
 
 import com.crud.crudstoreserver.exceptions.AddressNotFoundException;
 import com.crud.crudstoreserver.models.Address;
-import com.crud.crudstoreserver.models.Users;
+import com.crud.crudstoreserver.models.Person;
 
 import java.util.List;
 
@@ -22,6 +22,6 @@ public interface AddressService {
 
     void restoreAddressById(Long id) throws AddressNotFoundException;
 
-    Address getDefaultAddressByUser(Users user) throws AddressNotFoundException;
+    Address getDefaultAddressByPerson(Person person) throws AddressNotFoundException;
 
 }

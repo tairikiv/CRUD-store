@@ -25,27 +25,19 @@ public class AddressController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getAddressById(@PathVariable Long id) throws AddressNotFoundException {
-        addressService.findById(id);
-
+    public ResponseEntity<?> getAddressById(@PathVariable Long id) {
         try{
-            addressService.findById(id);
+            Address address = addressService.findById(id);
+            return new ResponseEntity<>(address, HttpStatus.FOUND);
         } catch (AddressNotFoundException addressNotFoundException ) {
             return new ResponseEntity<>(addressNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @PostMapping
     public ResponseEntity<?> addAddress(@RequestBody @Valid Address address){
         addressService.createAddress(address);
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @PostMapping
-    public List<Address> createBulkAddresses(@RequestBody List<Address> addresses){
-        addressService.createBulkAddresses(addresses);
-        return addressService.createBulkAddresses(addresses);
     }
 
     @PutMapping

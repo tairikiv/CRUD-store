@@ -3,7 +3,7 @@ package com.crud.crudstoreserver.services.implementations;
 import com.crud.crudstoreserver.exceptions.BankAccountNotFoundException;
 import com.crud.crudstoreserver.models.BankAccount;
 import com.crud.crudstoreserver.models.CardType;
-import com.crud.crudstoreserver.models.Users;
+import com.crud.crudstoreserver.models.Person;
 import com.crud.crudstoreserver.repositories.BankAccountRepository;
 import com.crud.crudstoreserver.services.BankAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,13 +107,13 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public BankAccount getDefaultBankAccountByUser(Users user) throws BankAccountNotFoundException {
-        Optional<BankAccount> optionalBankAccount = user.getBankAccounts().stream()
+    public BankAccount getDefaultBankAccountByPerson(Person person) throws BankAccountNotFoundException {
+        Optional<BankAccount> optionalBankAccount = person.getBankAccounts().stream()
                 .filter(bankAccount -> bankAccount.isActive() && bankAccount.isDefault())
                 .findFirst();
 
         if (optionalBankAccount.isEmpty()) {
-            throw new BankAccountNotFoundException(user);
+            throw new BankAccountNotFoundException(person);
         }
 
         return optionalBankAccount.get();
