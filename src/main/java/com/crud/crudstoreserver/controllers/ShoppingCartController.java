@@ -36,14 +36,12 @@ public class ShoppingCartController {
 
     @GetMapping
     public ResponseEntity<?> getCartByPerson(@RequestBody Person person) throws ShoppingCartNotFoundException {
-        shoppingCartService.findCartByPerson(person);
-
         try {
-            shoppingCartService.findCartByPerson(person);
+            ShoppingCart shoppingCart = shoppingCartService.findCartByPerson(person);
+            return new ResponseEntity<>(shoppingCart, HttpStatus.FOUND);
         } catch (ShoppingCartNotFoundException shoppingCartNotFoundException) {
             return new ResponseEntity<>(shoppingCartNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @GetMapping("/checkout")

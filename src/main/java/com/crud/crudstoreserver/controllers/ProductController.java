@@ -28,14 +28,12 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(@PathVariable Long id) throws ProductNotFoundException {
-        productService.findById(id);
-
         try {
-            productService.findById(id);
+            Product product = productService.findById(id);
+            return new ResponseEntity<>(product, HttpStatus.FOUND);
         } catch (ProductNotFoundException productNotFoundException){
             return new ResponseEntity<>(productNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @GetMapping("/{name}")

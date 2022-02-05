@@ -28,14 +28,12 @@ public class BankAccountController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getBankAccountById(@PathVariable Long id) throws BankAccountNotFoundException {
-        bankAccountService.findById(id);
-
-        try {
-            bankAccountService.findById(id);
+         try {
+           BankAccount bankAccount =  bankAccountService.findById(id);
+           return new ResponseEntity<>(bankAccount, HttpStatus.FOUND);
         } catch (BankAccountNotFoundException bankAccountNotFoundException) {
             return new ResponseEntity<>(bankAccountNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @GetMapping("/{cardType}")

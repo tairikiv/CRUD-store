@@ -28,14 +28,12 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPersonsById(@PathVariable Long id) throws PersonNotFoundException {
-        personService.findById(id);
-
         try {
-              personService.findById(id);
+              Person person = personService.findById(id);
+              return new ResponseEntity<>(person, HttpStatus.FOUND);
         } catch (PersonNotFoundException personNotFoundException) {
             return new ResponseEntity<>(personNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
 

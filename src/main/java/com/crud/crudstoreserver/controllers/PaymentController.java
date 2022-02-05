@@ -26,14 +26,12 @@ public class PaymentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPaymentById(@PathVariable Long id) throws PaymentNotFoundException {
-        paymentService.findById(id);
-
         try{
-            paymentService.findById(id);
+            Payment payment = paymentService.findById(id);
+            return new ResponseEntity<>(payment, HttpStatus.FOUND);
         } catch (PaymentNotFoundException paymentNotFoundException) {
             return new ResponseEntity<>(paymentNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @PostMapping

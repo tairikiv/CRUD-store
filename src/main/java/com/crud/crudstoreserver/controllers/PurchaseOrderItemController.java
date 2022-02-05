@@ -32,15 +32,12 @@ public class PurchaseOrderItemController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderItemById(@PathVariable Long id) throws PurchaseOrderItemNotFoundException {
-        purchaseOrderItemService.findById(id);
-
         try{
-            purchaseOrderItemService.findById(id);
+            PurchaseOrderItem purchaseOrderItem = purchaseOrderItemService.findById(id);
+            return new ResponseEntity<>(purchaseOrderItem, HttpStatus.FOUND);
         } catch (PurchaseOrderItemNotFoundException purchaseOrderItemNotFoundException) {
             return new ResponseEntity<>(purchaseOrderItemNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>( HttpStatus.FOUND);
     }
 
     @GetMapping("/person")
