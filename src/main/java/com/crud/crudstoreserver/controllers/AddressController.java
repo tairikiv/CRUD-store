@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/address")
@@ -26,13 +25,15 @@ public class AddressController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Address> getAddressById(@PathVariable Long id) throws AddressNotFoundException {
-        Optional<Address> addressOptional = Optional.ofNullable(addressService.findById(id));
+    public ResponseEntity<?> getAddressById(@PathVariable Long id) throws AddressNotFoundException {
+        addressService.findById(id);
 
-        if (addressOptional.isEmpty()) {
-            throw new AddressNotFoundException(id);
+        try{
+            addressService.findById(id);
+        } catch (AddressNotFoundException addressNotFoundException ) {
+            return new ResponseEntity<>(addressNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(addressOptional.get(), HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @PostMapping

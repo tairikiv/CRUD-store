@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -28,13 +27,15 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) throws ProductNotFoundException {
-        Optional<Product> productOptional = Optional.ofNullable(productService.findById(id));
+    public ResponseEntity<?> getProductById(@PathVariable Long id) throws ProductNotFoundException {
+        productService.findById(id);
 
-        if (productOptional.isEmpty()){
-            throw new ProductNotFoundException(id);
+        try {
+            productService.findById(id);
+        } catch (ProductNotFoundException productNotFoundException){
+            return new ResponseEntity<>(productNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(productOptional.get(), HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @GetMapping("/{name}")

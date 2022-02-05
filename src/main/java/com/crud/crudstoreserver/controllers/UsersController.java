@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/Users")
@@ -28,13 +27,15 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> getUsersById(@PathVariable Long id) throws UsersNotFoundException {
-        Optional<Users> usersOptional = Optional.ofNullable(usersService.findById(id));
+    public ResponseEntity<?> getUsersById(@PathVariable Long id) throws UsersNotFoundException {
+        usersService.findById(id);
 
-        if (usersOptional.isEmpty()) {
-            throw new UsersNotFoundException(id);
+        try {
+              usersService.findById(id);
+        } catch (UsersNotFoundException usersNotFoundException) {
+            return new ResponseEntity<>(usersNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(usersOptional.get(), HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
 

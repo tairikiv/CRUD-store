@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/cart")
@@ -36,13 +35,15 @@ public class CartController {
     private AddressService addressService;
 
     @GetMapping
-    public ResponseEntity<Cart> getCartByUser(@RequestBody Users user) throws CartNotFoundException {
-        Optional<Cart> cartOptional = Optional.ofNullable(cartService.findCartByUser(user));
+    public ResponseEntity<?> getCartByUser(@RequestBody Users user) throws CartNotFoundException {
+        cartService.findCartByUser(user);
 
-        if (cartOptional.isEmpty()) {
-            throw new CartNotFoundException(user);
+        try {
+            cartService.findCartByUser(user);
+        } catch (CartNotFoundException cartNotFoundException) {
+            return new ResponseEntity<>(cartNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(cartOptional.get(), HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @GetMapping("/checkout")

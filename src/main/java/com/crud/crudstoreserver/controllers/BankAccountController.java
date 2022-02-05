@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/bankAccount")
@@ -28,13 +27,15 @@ public class BankAccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BankAccount> getBankAccountById(@PathVariable Long id) throws BankAccountNotFoundException {
-        Optional<BankAccount> bankAccountOptional = Optional.ofNullable(bankAccountService.findById(id));
+    public ResponseEntity<?> getBankAccountById(@PathVariable Long id) throws BankAccountNotFoundException {
+        bankAccountService.findById(id);
 
-        if (bankAccountOptional.isEmpty()) {
-            throw new BankAccountNotFoundException(id);
+        try {
+            bankAccountService.findById(id);
+        } catch (BankAccountNotFoundException bankAccountNotFoundException) {
+            return new ResponseEntity<>(bankAccountNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(bankAccountOptional.get(), HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @GetMapping("/{cardType}")
@@ -43,13 +44,15 @@ public class BankAccountController {
     }
 
     @GetMapping("/{cardNumber}")
-    public ResponseEntity<BankAccount> getBankAccountByCardNumber(@PathVariable String cardNumber) throws BankAccountNotFoundException {
-        Optional<BankAccount> bankAccountOptional = Optional.ofNullable(bankAccountService.findByCardNumber(cardNumber));
+    public ResponseEntity<?> getBankAccountByCardNumber(@PathVariable String cardNumber) throws BankAccountNotFoundException {
+        bankAccountService.findByCardNumber(cardNumber);
 
-        if (bankAccountOptional.isEmpty()) {
-            throw new BankAccountNotFoundException(cardNumber);
+        try {
+            bankAccountService.findByCardNumber(cardNumber);
+        } catch (BankAccountNotFoundException bankAccountNotFoundException) {
+            return new ResponseEntity<>(bankAccountNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(bankAccountOptional.get(), HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @GetMapping("/{bank}")

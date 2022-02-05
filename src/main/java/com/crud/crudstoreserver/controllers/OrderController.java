@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/order")
@@ -26,13 +25,15 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) throws OrderNotFoundException{
-        Optional<Order> orderOptional = Optional.ofNullable(orderService.findById(id));
+    public ResponseEntity<?> getOrderById(@PathVariable Long id) throws OrderNotFoundException{
+        orderService.findById(id);
 
-        if (orderOptional.isEmpty()) {
-            throw new OrderNotFoundException(id);
+        try{
+            orderService.findById(id);
+        } catch (OrderNotFoundException orderNotFoundException) {
+            return new ResponseEntity<>(orderNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(orderOptional.get(), HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @PutMapping

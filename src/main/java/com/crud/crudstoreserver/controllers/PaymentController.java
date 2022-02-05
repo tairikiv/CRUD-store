@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/payment")
@@ -26,13 +25,15 @@ public class PaymentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Payment> getPaymentById(@PathVariable Long id) throws PaymentNotFoundException {
-        Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.findById(id));
+    public ResponseEntity<?> getPaymentById(@PathVariable Long id) throws PaymentNotFoundException {
+        paymentService.findById(id);
 
-        if (paymentOptional.isEmpty()) {
-            throw new PaymentNotFoundException(id);
+        try{
+            paymentService.findById(id);
+        } catch (PaymentNotFoundException paymentNotFoundException) {
+            return new ResponseEntity<>(paymentNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(paymentOptional.get(), HttpStatus.FOUND);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @PostMapping
